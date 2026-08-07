@@ -11,12 +11,13 @@ WHY this file exists:
   crashes only that Blueprint. If this file itself crashes, all functions
   go down — so it must stay simple and free of logic.
 
-Current function inventory (24 timer triggers + 3 HTTP triggers = 27 total):
+Current function inventory (24 timer triggers + 4 HTTP triggers = 28 total):
   File                        Function                     Type
   ──────────────────────────────────────────────────────────────────────────────
   function_app.py             ping                         HTTP Trigger
   task_chain.py               taskChain                    HTTP Trigger
   messages.py                 messages                     HTTP Trigger
+  claude_messages.py          claude_messages              HTTP Trigger
   pre_warm.py                 preWarm                      Timer — daily 04:45
   email_digest_0500.py        emailDigest0500              Timer — daily 05:00
   email_digest_0700.py        emailDigest0700              Timer — daily 07:00
@@ -42,6 +43,15 @@ Current function inventory (24 timer triggers + 3 HTTP triggers = 27 total):
   task_sunday.py              createSundayTasks            Timer — Sunday 17:00
   task_monthly.py             createMonthlyTasks           Timer — 1st of month 05:00
   task_guardian.py            taskGuardian                 Timer — daily 08:00
+
+  Session 44 (Claude Shannon) change:
+    claude_messages.py registered as a Blueprint. This is the HTTP Trigger
+    endpoint for the new, separate Claude Shannon Teams bot — a plain,
+    personal 1:1 chat bridge to the Anthropic API with its own bot
+    identity (CLAUDE_BOT_APP_ID), entirely independent of Leo's messages.py.
+    The file existed in the repository from an earlier commit but was
+    never imported or registered here, so it was invisible to the runtime
+    despite being valid, error-free Python — this entry corrects that.
 
   Session 37 changes:
     task_saturday.py added — Empty: Bins and Change: Tea Towel every
@@ -96,6 +106,7 @@ import azure.functions as func
 from pre_warm                import bp_pre_warm
 from task_chain              import bp as bp_task_chain
 from messages                import bp as bp_messages
+from claude_messages         import bp as bp_claude_messages
 from email_digest_0500       import bp as bp_digest_0500
 from email_digest_0700       import bp as bp_digest_0700
 from email_digest_0900       import bp as bp_digest_0900
@@ -136,6 +147,7 @@ app = func.FunctionApp(http_auth_level=func.AuthLevel.ANONYMOUS)
 app.register_blueprint(bp_pre_warm)
 app.register_blueprint(bp_task_chain)
 app.register_blueprint(bp_messages)
+app.register_blueprint(bp_claude_messages)
 app.register_blueprint(bp_digest_0500)
 app.register_blueprint(bp_digest_0700)
 app.register_blueprint(bp_digest_0900)
