@@ -3,3 +3,5 @@ requests
 azure-storage-blob
 yfinance
 anthropic
+PyJWT
+cryptography
