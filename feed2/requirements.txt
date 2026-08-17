@@ -1,0 +1,25 @@
+# Azure Functions
+azure-functions>=1.16.0
+
+# RSS Feed Parsing
+feedparser>=6.0.10
+
+# HTTP Requests
+requests>=2.31.0
+
+# HTML Parsing
+beautifulsoup4>=4.12.0
+lxml>=4.9.0
+
+# Date Parsing
+python-dateutil>=2.8.2
+
+# Microsoft Graph API (for OneDrive support, optional)
+msgraph-core>=0.2.2
+azure-identity>=1.14.0
+
+# Logging and Debugging
+python-dotenv>=1.0.0
+
+# Type hints and validation
+pydantic>=2.0.0
